@@ -1,26 +1,56 @@
 
-var buttonColors = ["red","blue","green","yellow"]
+var buttonColors = ["red","blue","green","yellow"];
+var gamePattern = [];
+var userClickedPattern = [];
+
+
+
+$(".btn").click(function(){
+  var userChosenColor = $("this").attr("id");
+  userClickedPattern.push(userChosenColor);
+})
+
+
+
+
 
 
 function nextSequence() {
     var randomNumber = Math.random() * 4;
     randomNumber = Math.floor(randomNumber);
+  var randomChosenColor = buttonColors[randomNumber];
+  gamePattern.push(randomChosenColor);
+
+$("#" + randomChosenColor).on("click", function(){
+
+  $("." + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100);
+
+  var audio = new Audio("sounds/" + randomChosenColor + ".mp3");
+  audio.play();
+  return randomChosenColor;
+});
+
+
+};
+$(".btn").click(nextSequence);
+
+
+function playSound(name){
+  var audio = new Audio("sounds/" + name + ".mp3");
+  audio.play();
 }
 
-var randomChosenColor
-
-
-
-
-
+function animatePress(currentColor) {
+    $("#" + currentColor).addClass("pressed");
+    setTimeout(function() {
+        $("#" + currentColor).removeClass("pressed");
+    }, 100);
+}
 
 
 
 //
-// var greenAudio = new Audio("sounds/green.mp3");
-// var redAudio = new Audio("sounds/red.mp3");
-// var yellowAudio = new Audio("sounds/yellow.mp3");
-// var blueAudio = new Audio("sounds/blue.mp3");
+
 //
 // $(document).keypress(function(){
 //   $("h1").html("Level 1");
